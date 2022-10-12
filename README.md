@@ -1,13 +1,13 @@
 # EduardoVeni.github.io
-Juego de pasarela
+## Juego de pasarela Link a la version actual https://eduardoveni.github.io/
 
-
+## Tutorial
 1 - Crear cuenta en https://github.com/
 
 2 - Pasar su usuario para que las agregue de colaboradoras
 
 
-#Bajar Archivos
+## Bajar Archivos
 
 desde CODE- download Zip 
 pueden bajarse todos los archivos que tenemos hasta ahora para editarlos
@@ -15,7 +15,8 @@ pueden bajarse todos los archivos que tenemos hasta ahora para editarlos
 
 
 
-#Subir Archivos
+## Subir Archivos
  desde Add File - Upload files   
 agregan los archivos actualizados y queda todo un historial de las actualizaciones que se fueron  haciendo (x si se rompe todo jaj)
 cada vez que agregan archivo esta bueno en "commit' comentar que cambios se hicieron sobre el archivo anterior
+![image](https://user-images.githubusercontent.com/115672756/195469045-f23403a7-1137-405f-ac95-1293f079fa91.png)
