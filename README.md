@@ -3,6 +3,7 @@ Juego de pasarela
 
 
 1 - Crear cuenta en https://github.com/
+
 2 - Pasar su usuario para que las agregue de colaboradoras
 
 
