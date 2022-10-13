@@ -1,5 +1,5 @@
 # EduardoVeni.github.io
-## Juego de pasarela Link a la version actual https://eduardoveni.github.io/
+## Juego de pasarela Link a la version actual https://eduardoveni.github.io/index
 
 ## Tutorial
 1 - Crear cuenta en https://github.com/
