@@ -43,7 +43,6 @@ document.addEventListener('keydown',function(e){
     y=document.getElementById("personaje").offsetTop;
     document.getElementById("personaje").style.position="relative";
 
-    //console.log(e); //muestra que tecla se presiona
     switch(e.key){
         case "ArrowLeft":
             personajeUno.izquierda();
