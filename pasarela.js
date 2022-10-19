@@ -36,7 +36,7 @@ function Personaje(x,y,nombre) {
 
 }
 //posicion inicial personaje
-var personajeUno=new Personaje(-1245,20,"Viejito");
+var personajeUno=new Personaje(-3310,-600,"Viejito");
 
 document.addEventListener('keydown',function(e){
     //agregue esto
