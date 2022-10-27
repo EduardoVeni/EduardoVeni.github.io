@@ -1,13 +1,29 @@
+//variables del canvas
 var canvas;
 var ctx;
-//creo objeto de tipo imagen
+//variables para el juego
+
+var puntos=0;
+var vidas=3;
+
+//variables para las imagenes
 var imgPersonajeUno=new Image();
-var personajeUno= new Personaje(250,150,74,220);
+var imgAplauso=new Image();
+var imgBondi=new Image();
+
+//variables fondo
+var posicionFondo=0;
+
+//crear objetos
+var personajeUno= new Personaje(50,400,74,220);
+
+
 function dibujar() {
-    //document.getElementById("canvas").style.backgroundColor="#00ff5c";
-    //guardo el canvas en una variable
+    //selecciono canvas
     canvas=document.getElementById("canvas");
+    //asigno imagen de fondo
     canvas.style.backgroundImage="url(img/fondo.png)";
+   
     //establezco contexto
     ctx=canvas.getContext("2d");
     dibujaTexto();
@@ -20,8 +36,15 @@ function dibujar() {
         personajeUno.dibuja();
     }
 
-}
 
+
+
+    setInterval(function(){
+        posicionFondo-=5;
+        canvas.style.backgroundPosition=posicionFondo+"px 0px"
+    },1000/25);
+}
+//personaje
 function Personaje(x,y,ancho,alto){
     //atributos
     this.x=x;
@@ -32,10 +55,11 @@ function Personaje(x,y,ancho,alto){
     //metodos
     this.derecha=function(){
         this.x+=10;
-        
+        posicionFondo--;
     }
     this.izquierda=function(){
         this.x-=10;
+        posicionFondo++;
 
     }
     this.arriba=function(){
@@ -49,17 +73,40 @@ function Personaje(x,y,ancho,alto){
     }
 }
 
-function dibujaTexto(){
-//dibujar rectangulo
-ctx.fillStyle="black";
-ctx.fillRect(20,28,65,30);//x,y,ancho,alto
-//dibujar texto
-ctx.fillStyle="white";
-ctx.font="20px Impact";
-ctx.fillText('Vidas',30,50)
+//objetos
+function Elemento(x,y,ancho,alto,tipo){
+    this.x=x;
+    this.y=y;
+    this.ancho=ancho;
+    this.alto=alto;
+    this.tipo=tipo;
+    //metodos
+
+    
+    
 }
 
 
+
+
+//dibujar texto del juego
+function dibujaTexto(){   
+/*dibujar rectangulo
+//puntos
+ctx.fillStyle="black";
+ctx.fillRect(20,28,80,30);//x,y,ancho,alto
+*/
+//dibujar texto
+    //puntos
+    ctx.fillStyle="black";
+    ctx.font="20px Impact";
+    //puntos
+    ctx.fillText('Puntos: '+puntos,20,40)
+    //vidas
+    ctx.fillText('Vidas: '+vidas,715,40)
+}
+
+//escuchador
 document.addEventListener('keydown',function(e){
     
     switch(e.key){
@@ -99,10 +146,3 @@ document.addEventListener('keydown',function(e){
     personajeUno.dibuja();
 });
 
-//obstaculos
-var contador=0;
-setInterval(function(){
-//acciones a ejecutarse
-    contador++;
-    console.log(contador);
-},1000);//cada 1 seg
