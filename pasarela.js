@@ -4,7 +4,7 @@ var ctx;
 var imgPersonajeUno=new Image();
 var personajeUno= new Personaje(250,150,74,220);
 function dibujar() {
-    document.getElementById("canvas").style.backgroundColor="#00ff5c";
+    //document.getElementById("canvas").style.backgroundColor="#00ff5c";
     //guardo el canvas en una variable
     canvas=document.getElementById("canvas");
     canvas.style.backgroundImage="url(img/fondo.png)";
