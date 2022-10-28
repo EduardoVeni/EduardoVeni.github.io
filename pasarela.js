@@ -23,7 +23,7 @@ function dibujar() {
     //selecciono canvas
     canvas=document.getElementById("canvas");
     //asigno imagen de fondo
-    canvas.style.backgroundImage="url(img/fondo.png)";
+    canvas.style.backgroundImage="url(img/fondosinarboles.png)";
    
     //establezco contexto
     ctx=canvas.getContext("2d");
