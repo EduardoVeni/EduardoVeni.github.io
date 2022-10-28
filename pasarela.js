@@ -15,9 +15,9 @@ var imgBondi=new Image();
 var posicionFondo=0;
 
 //crear objetos
-var personajeUno= new Personaje(50,400,74,220);
-var aplausoUno= new Elemento(100,100,85,79,'aplauso');
-var bondiUno= new Elemento(200,200,225,300,'bondi');
+var personajeUno= new Personaje(50,200,74,220);
+var aplausoUno= new Elemento(100,100,65,59,'aplauso');
+var bondiUno= new Elemento(200,200,225,200,'bondi');
 
 function dibujar() {
     //selecciono canvas
