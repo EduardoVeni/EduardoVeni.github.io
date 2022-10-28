@@ -16,7 +16,8 @@ var posicionFondo=0;
 
 //crear objetos
 var personajeUno= new Personaje(50,400,74,220);
-
+var aplausoUno= new Elemento(100,100,85,79,'aplauso');
+var bondiUno= new Elemento(200,200,225,300,'bondi');
 
 function dibujar() {
     //selecciono canvas
@@ -35,7 +36,17 @@ function dibujar() {
        // ctx.drawImage(imgPersonajeUno,250,150,74,220);//puede recibir 3 o 5(nombre objeto,posX,posY,ancho,alto)
         personajeUno.dibuja();
     }
+    //dibujar Aplauso
+    imgAplauso.src="img/aplauso.png";
+    imgAplauso.onload=function(){
+        aplausoUno.dibujaElemento(imgAplauso);
+    }
 
+    //dibujar Bondi
+    imgBondi.src="img/bondi.png";
+    imgBondi.onload=function(){
+        bondiUno.dibujaElemento(imgBondi);
+    }
 
 
 
@@ -73,6 +84,9 @@ function Personaje(x,y,ancho,alto){
     }
 }
 
+
+
+
 //objetos
 function Elemento(x,y,ancho,alto,tipo){
     this.x=x;
@@ -82,7 +96,9 @@ function Elemento(x,y,ancho,alto,tipo){
     this.tipo=tipo;
     //metodos
 
-    
+    this.dibujaElemento=function(img){
+        ctx.drawImage(img,this.x,this.y,this.ancho,this.alto);
+    }
     
 }
 
@@ -143,6 +159,11 @@ document.addEventListener('keydown',function(e){
     }
     ctx.clearRect(0,0,canvas.width,canvas.height);
     dibujaTexto();
+    
+    bondiUno.dibujaElemento(imgBondi);
+    aplausoUno.dibujaElemento(imgAplauso);
     personajeUno.dibuja();
+
+
 });
 
