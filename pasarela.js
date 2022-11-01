@@ -214,10 +214,6 @@ document.addEventListener('keydown',function(e){
     switch(e.key){
         
         //movimiento flechas
-        case "ArrowDown":
-            personajeUno.abajo();
-
-        break;
         case "ArrowRight":
             personajeUno.derecha();
         break;
@@ -234,10 +230,6 @@ document.addEventListener('keydown',function(e){
 });
 document.addEventListener("keyup",function(e){
     switch(e.key){
-        case "ArrowDown":
-            personajeUno.alto=150;
-            personajeUno.y=320;
-        break;
         case "ArrowUp":
             teclaSalto=false;
         break;
