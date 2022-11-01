@@ -25,6 +25,8 @@ var aplauso= new Elemento(850,150,65,59,'aplauso',imgAplauso);
 var bondiUno= new Elemento(850,200,90,70,'bondiUno',imgBondiUno);
 var bondiDos= new Elemento(1300,300,90,70,'bondiDos',imgBondiDos);
 
+/*variable salto*/
+var teclaSalto=false;
 
 function dibujar() {
     //selecciono canvas
@@ -73,6 +75,13 @@ function dibujar() {
             bondiDos.mover();
             aplauso.mover();
 
+            /*logica de salto*/
+            if(teclaSalto==true){
+                personajeUno.arriba();
+            }else{
+                personajeUno.abajo();
+            }
+
             /*chequear si colisionan*/
             bondiUno.colision();
             bondiDos.colision();
@@ -115,8 +124,16 @@ function Personaje(x,y,ancho,alto){
 
     //metodos
     this.derecha=function(){
+        if(this.x<750){
         this.x+=10;
         posicionFondo--;
+    }
+    }
+    this.izquierda=function(){
+        if(this.x>20){
+        this.x-=10;
+        posicionFondo++;
+    }
     }
     this.arriba=function(){
     if(this.y>115){
@@ -193,10 +210,6 @@ document.addEventListener('keydown',function(e){
     switch(e.key){
         
         //movimiento flechas
-        case "ArrowUp":
-            personajeUno.arriba();
-
-        break;
         case "ArrowDown":
             personajeUno.abajo();
 
@@ -204,9 +217,25 @@ document.addEventListener('keydown',function(e){
         case "ArrowRight":
             personajeUno.derecha();
         break;
+        case "ArrowLeft":
+            personajeUno.izquierda();
+        break;
+        case "ArrowUp":
+            teclaSalto=true;
+        break;
     }
     if(vidas>0){
         canvas.style.backgroundPosition=posicionFondo+"px 0px";
     }
 });
-
+document.addEventListener("keyup",function(e){
+    switch(e.key){
+        case "ArrowDown":
+            personajeUno.alto=150;
+            personajeUno.y=320;
+        break;
+        case "ArrowUp":
+            teclaSalto=false;
+        break;
+    }
+});
