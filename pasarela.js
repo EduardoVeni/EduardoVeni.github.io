@@ -18,6 +18,8 @@ var posicionFondo=0;
 /*variables para los audios*/
 var audioPerdida;
 var audioPuntos;
+var audioRock;
+
 
 //crear objetos
 var personajeUno= new Personaje(50,200,40,90);
@@ -54,7 +56,7 @@ function dibujar() {
         bondiUno.dibujaElemento();
     }
     //dibujar Bondi dos
-    imgBondiDos.src="img/bondi.png";
+    imgBondiDos.src="img/bondi_verde.png";
     imgBondiDos.onload=function(){
         bondiDos.dibujaElemento();
     }
@@ -64,7 +66,8 @@ function dibujar() {
     audioPerdida.src="audios/perdida.mp3";
     audioPuntos=new Audio();
     audioPuntos.src="audios/puntos.mp3";
-
+    audioRock=new Audio();
+    audioRock.src="audios/cancion.mp3";
 
     setInterval(function(){
         posicionFondo-=5;
@@ -74,6 +77,7 @@ function dibujar() {
             bondiUno.mover();
             bondiDos.mover();
             aplauso.mover();
+            audioRock.play()
 
             /*logica de salto*/
             if(teclaSalto==true){
