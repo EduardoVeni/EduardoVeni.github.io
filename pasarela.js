@@ -11,6 +11,9 @@ var imgPersonajeUno=new Image();
 var imgAplauso=new Image();
 var imgBondiUno=new Image();
 var imgBondiDos=new Image();
+var imgBondiTres=new Image();
+var padreEHijo=new Image();
+var hijoSolo=new Image();
 
 //variables fondo
 var posicionFondo=0;
@@ -18,25 +21,37 @@ var posicionFondo=0;
 /*variables para los audios*/
 var audioPerdida;
 var audioPuntos;
+var audioPerdiste;
+var audioGanaste;
 var audioRock;
 
 
 //crear objetos
 var personajeUno= new Personaje(50,200,40,90);
 var aplauso= new Elemento(850,150,65,59,'aplauso',imgAplauso);
-var bondiUno= new Elemento(850,200,90,70,'bondiUno',imgBondiUno);
+var bondiUno= new Elemento(950,200,90,70,'bondiUno',imgBondiUno);
 var bondiDos= new Elemento(1300,300,90,70,'bondiDos',imgBondiDos);
+var bondiTres= new Elemento(1200,300,90,70,'bondiDos',imgBondiTres);
 
-/*variable salto*/
-var teclaSalto=false;
+/*Variables para color de botón*/
+var colorBoton="#000";
+
+//agrego una variable para saber si el juego está inciado o no
+var inicio=false;
 
 function dibujar() {
-    //selecciono canvas
-    canvas=document.getElementById("canvas");
-    //asigno imagen de fondo
-    canvas.style.backgroundImage="url(img/fondosinarboles.png)";
+    cargarImagenInicio();
+
     //establezco contexto
     ctx=canvas.getContext("2d");
+	//y dibujo el estado inicial, el resto que estaba acá lo moví a la función juego.
+	dibujarTextoInicio();
+}
+
+function juego() {
+    personajeUno.x= 50;
+    canvas.style.backgroundImage="url(img/fondosinarboles.png)";
+	inicio=true; //indico que el juego está iniciado
     dibujaTexto();
     
     //conecto la imagen
@@ -60,6 +75,11 @@ function dibujar() {
     imgBondiDos.onload=function(){
         bondiDos.dibujaElemento();
     }
+    //dibujar Bondi tres
+    imgBondiTres.src="img/bondi_naranja.png";
+    imgBondiTres.onload=function(){
+        bondiTres.dibujaElemento();
+    }
 
     //audios
     audioPerdida=new Audio();
@@ -68,47 +88,63 @@ function dibujar() {
     audioPuntos.src="audios/puntos.mp3";
     audioRock=new Audio();
     audioRock.src="audios/cancion.mp3";
+    audioGanaste=new Audio();
+    audioGanaste.src="audios/ganaste.mp3";
+    audioPerdiste=new Audio();
+    audioPerdiste.src="audios/perdiste.mp3";
 
     setInterval(function(){
-        posicionFondo-=5;
-        canvas.style.backgroundPosition=posicionFondo+"px 0px"
+		borrar();
         if(vidas>0 && puntos<100){
+            posicionFondo-=5;
+            canvas.style.backgroundPosition=posicionFondo+"px 0px";
+
             /*hacerlos mover*/
             bondiUno.mover();
             bondiDos.mover();
+            bondiTres.mover();
             aplauso.mover();
-            audioRock.play()
-
-            /*logica de salto*/
-            if(teclaSalto==true){
-                personajeUno.arriba();
-            }else{
-                personajeUno.abajo();
-            }
+            audioRock.play();
+            audioPerdiste.pause();
+            audioGanaste.pause();
 
             /*chequear si colisionan*/
             bondiUno.colision();
             bondiDos.colision();
+            bondiTres.colision();
             aplauso.colision();
 
             ctx.clearRect(0,0,canvas.width,canvas.height);//borra
             personajeUno.dibuja();
             bondiUno.dibujaElemento();
             bondiDos.dibujaElemento();
+            bondiTres.dibujaElemento();
             aplauso.dibujaElemento();
             dibujaTexto();
-        }else if (vidas<=0){
-            ctx.clearRect(0,0,canvas.width,canvas.height);
+        } else {
+            borrar();
+            personajeUno.x= 50;
+			ctx.fillStyle=colorBoton;
+			ctx.font="30px impact";
+			ctx.fillText('REINICIAR', 350,470);
             ctx.font="80px Impact";
-            ctx.fillText("PERDISTE",250,330);
-        }else if (puntos=100){
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            ctx.font="80px Impact";
-            ctx.fillText("GANASTE",250,330);
+            ctx.fillStyle="#000000";
+            if (vidas<=0){
+                ctx.fillText("PERDISTE",260,370);
+                audioRock.pause();
+                audioPerdiste.play();
+                hijoSolo.src="img/hijosolo.png"
+                ctx.drawImage(hijoSolo,0,0);
+            } else if (puntos=100){
+                ctx.fillText("GANASTE",260,370);
+                audioRock.pause();
+                audioGanaste.play();
+                padreEHijo.src="img/padreehijojuntos.png"
+                ctx.drawImage(padreEHijo,0,0);
+            }
         }
+        
     },1000/25);
-
-    
 }
 
 function dibujaTexto(){
@@ -117,6 +153,22 @@ function dibujaTexto(){
     ctx.fillText("Puntos: "+puntos,20,40);
     ctx.fillText("Vidas: "+vidas,715,40);
 }
+
+function dibujarTextoInicio(){
+	borrar();
+	ctx.font="40px impact";
+	ctx.fillStyle=colorBoton;
+	ctx.fillText('INICIAR', 350,470);
+}
+
+
+function cargarImagenInicio(){
+    //selecciono canvas
+    canvas=document.getElementById("canvas");
+    //asigno imagen de fondo inicio
+    canvas.style.backgroundImage="url(img/fondoinicio.png)";
+}
+
 
 //personaje
 function Personaje(x,y,ancho,alto){
@@ -140,13 +192,13 @@ function Personaje(x,y,ancho,alto){
     }
     }
     this.arriba=function(){
-    if(this.y>115){
-        this.y-=30;
+    if(this.y>140){
+        this.y-=45;
     }
     }
     this.abajo=function(){
-        if(this.y<400){
-            this.y+=30;
+        if(this.y<390){
+            this.y+=45;
         }
     }
     this.dibuja=function(){
@@ -154,8 +206,10 @@ function Personaje(x,y,ancho,alto){
     }
 }
 
-
-
+function borrar(){
+	canvas.width=800;
+	canvas.height=600;
+}
 
 //objetos
 function Elemento(x,y,ancho,alto,tipo,imagen){
@@ -177,18 +231,21 @@ function Elemento(x,y,ancho,alto,tipo,imagen){
             this.sortear();
         }
     }
+    var posicionesX=[1400,1300,1200,1100,1000,900];
+    var posicionesY=[172,300,400];
+    
     this.sortear=function(){
-        /*
-            Math.floor(
-                Math.random() * (max - min + 1)
-            )+ min;
-        */
-        //rango para x máximo sea 1400, min 850
-        this.x=Math.floor(Math.random()*(1400 - 850 +1))+850;
+                               
+    this.x=posicionesX[Math.floor
+    (Math.random()*posicionesX.length)];
 
-        //rango para y máximo sea 400, minimo 172
-        this.y=Math.floor(Math.random()*((400)-(172)+1))+(172);
+    this.y=posicionesY[Math.floor
+    (Math.random()*posicionesY.length)];
+
     }
+
+    
+
     this.colision=function(){
         if(
             (this.x>personajeUno.x-this.ancho)
@@ -214,6 +271,9 @@ document.addEventListener('keydown',function(e){
     switch(e.key){
         
         //movimiento flechas
+        case "ArrowDown":
+            personajeUno.abajo();
+        break;
         case "ArrowRight":
             personajeUno.derecha();
         break;
@@ -221,17 +281,44 @@ document.addEventListener('keydown',function(e){
             personajeUno.izquierda();
         break;
         case "ArrowUp":
-            teclaSalto=true;
+            personajeUno.arriba();
         break;
     }
     if(vidas>0){
         canvas.style.backgroundPosition=posicionFondo+"px 0px";
     }
 });
-document.addEventListener("keyup",function(e){
-    switch(e.key){
-        case "ArrowUp":
-            teclaSalto=false;
-        break;
-    }
+
+/*Reinicio de juego*/
+document.addEventListener('click',function(e){
+	//Acá evaluo en función de vidas y de la variable inicio, si estoy al principio o al final del juego
+	if(vidas==0){
+		if(e.x>200&&e.x<500&&e.y>420&&e.y<500){
+			vidas=3;
+			puntos=0;
+			personajeUno.x=posXPer;
+			personajeUno.y=posYPer;
+		}
+	}else if(inicio==false){
+		//si inicio es falso estamos al principio del juego y llamo a la función juego
+        juego();
+	}
+	
+});
+document.addEventListener('mousemove',function(e){
+	//si está al final o al principio del juego:
+	if(vidas==0 || inicio==false){
+		if(e.x>200&&e.x<500&&e.y>420&&e.y<500){
+				canvas.style.cursor="pointer";
+				colorBoton="#fff";
+		}else{
+			canvas.style.cursor="";
+			colorBoton="#000";
+		}
+		//y si es al principio, hago que redibuje el botón de inicio.
+		if(inicio==false){
+            cargarImagenInicio();
+			dibujarTextoInicio();
+		}
+	}
 });
