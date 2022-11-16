@@ -35,8 +35,4 @@ El objetivo es que Juan Cruz encuentre al padre, para que esto pase va a tener q
 ![personaje](https://user-images.githubusercontent.com/48781895/202056496-5c252d4c-edc1-4392-a474-c3e5806adb90.png)
 
 ## Integrantes
-Agostina Cecilia Cameron               
-Nicole Grinberg                                 
-Guido Martina       
-Loana Melul         
-Julieta Santoro                                 
+Agostina Cecilia Cameron, Nicole Grinberg, Guido Martina, Loana Melul, Julieta Santoro.                                                             
