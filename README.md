@@ -1,6 +1,8 @@
 # Eduardo vení a buscar a Juan Cruz
+Integrantes:
+Agostina Cecilia Cameron, Nicole Grinberg, Guido Martina, Loana Melul y Julieta Santoro.   
+# Link al juego: https://eduardoveni.github.io/index
 
-## Link a la version actual https://eduardoveni.github.io/index
 
 
 ## Historia del juego
@@ -33,6 +35,4 @@ El objetivo es que Juan Cruz encuentre al padre, para que esto pase va a tener q
 ## Personajes
 ![padre](https://user-images.githubusercontent.com/48781895/202056492-abff9a82-ffd1-490e-a23c-f286068b209e.png)
 ![personaje](https://user-images.githubusercontent.com/48781895/202056496-5c252d4c-edc1-4392-a474-c3e5806adb90.png)
-
-## Integrantes
-Agostina Cecilia Cameron, Nicole Grinberg, Guido Martina, Loana Melul, Julieta Santoro.                                                             
+                                                          
