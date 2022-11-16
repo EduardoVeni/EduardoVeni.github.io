@@ -4,7 +4,7 @@ var ctx;
 
 //variables para el juego
 var puntos=0;
-var vidas=3;
+var vidas=0;
 
 //variables para las imagenes
 var imgPersonajeUno=new Image();
@@ -25,6 +25,10 @@ var audioPerdiste;
 var audioGanaste;
 var audioRock;
 
+/*posicion Inicial personaje*/
+var posXPer=100;
+var posYPer=350;
+
 
 //crear objetos
 var personajeUno= new Personaje(50,200,40,90);
@@ -39,20 +43,18 @@ var colorBoton="#000";
 //agrego una variable para saber si el juego está inciado o no
 var inicio=false;
 
-function dibujar() {
-    cargarImagenInicio();
-
-    //establezco contexto
-    ctx=canvas.getContext("2d");
-	//y dibujo el estado inicial, el resto que estaba acá lo moví a la función juego.
-	dibujarTextoInicio();
-}
-
-function juego() {
-    personajeUno.x= 50;
-    canvas.style.backgroundImage="url(img/fondosinarboles.png)";
-	inicio=true; //indico que el juego está iniciado
-    dibujaTexto();
+    //audios
+    audioPerdida=new Audio();
+    audioPerdida.src="audios/perdida.mp3";
+    audioPuntos=new Audio();
+    audioPuntos.src="audios/puntos.mp3";
+    audioRock=new Audio();
+    audioRock.src="audios/cancion.mp3";
+    audioGanaste=new Audio();
+    audioGanaste.src="audios/ganaste.mp3";
+    audioPerdiste=new Audio();
+    audioPerdiste.src="audios/perdiste.mp3";
+    
     
     //conecto la imagen
     imgPersonajeUno.src='img/personaje.png';
@@ -81,19 +83,37 @@ function juego() {
         bondiTres.dibujaElemento();
     }
 
-    //audios
-    audioPerdida=new Audio();
-    audioPerdida.src="audios/perdida.mp3";
-    audioPuntos=new Audio();
-    audioPuntos.src="audios/puntos.mp3";
-    audioRock=new Audio();
-    audioRock.src="audios/cancion.mp3";
-    audioGanaste=new Audio();
-    audioGanaste.src="audios/ganaste.mp3";
-    audioPerdiste=new Audio();
-    audioPerdiste.src="audios/perdiste.mp3";
+    var intervalo;
 
-    setInterval(function(){
+
+function dibujar() {
+    cargarImagenInicio();
+
+    //establezco contexto
+    ctx=canvas.getContext("2d");
+	//y dibujo el estado inicial, el resto que estaba acá lo moví a la función juego.
+	dibujarTextoInicio();
+}
+
+function juego() {
+
+    personajeUno.x= 50;
+    canvas.style.backgroundImage="url(img/fondosinarboles.png)";
+    canvas.style.cursor="";
+    colorBoton="#000";
+	inicio=true; //indico que el juego está iniciado
+    dibujaTexto();
+
+    audioRock.play();
+    audioPerdiste.pause();
+    audioGanaste.pause();
+
+
+    if (intervalo) {
+        intervalo.clearInterval();
+    }
+
+    intervalo = setInterval(function(){
 		borrar();
         if(vidas>0 && puntos<100){
             posicionFondo-=5;
@@ -104,9 +124,6 @@ function juego() {
             bondiDos.mover();
             bondiTres.mover();
             aplauso.mover();
-            audioRock.play();
-            audioPerdiste.pause();
-            audioGanaste.pause();
 
             /*chequear si colisionan*/
             bondiUno.colision();
@@ -289,25 +306,23 @@ document.addEventListener('keydown',function(e){
     }
 });
 
+
 /*Reinicio de juego*/
 document.addEventListener('click',function(e){
 	//Acá evaluo en función de vidas y de la variable inicio, si estoy al principio o al final del juego
-	if(vidas==0){
-		if(e.x>200&&e.x<500&&e.y>420&&e.y<500){
+    
+	if((vidas==0 || puntos == 100) && e.x>200&&e.x<500&&e.y>420&&e.y<500){
 			vidas=3;
 			puntos=0;
 			personajeUno.x=posXPer;
 			personajeUno.y=posYPer;
-		}
-	}else if(inicio==false){
-		//si inicio es falso estamos al principio del juego y llamo a la función juego
-        juego();
+            juego();
 	}
-	
 });
+
 document.addEventListener('mousemove',function(e){
 	//si está al final o al principio del juego:
-	if(vidas==0 || inicio==false){
+	if (vidas==0 || puntos == 100){
 		if(e.x>200&&e.x<500&&e.y>420&&e.y<500){
 				canvas.style.cursor="pointer";
 				colorBoton="#fff";
